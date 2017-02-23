@@ -1,0 +1,12 @@
+## INSTALL
+install.packages('data.table')
+install.packages('digest')
+source("http://bioconductor.org/biocLite.R")
+biocLite("SSOAP")
+biocLite("KEGGREST")
+biocLite("pcaMethods")
+biocLite("Rdisop")
+biocLite("GO.db")
+biocLite("matrixStats")
+biocLite('WGCNA')
+devtools::install_github("yufree/xMSannotator")
