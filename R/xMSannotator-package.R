@@ -12,7 +12,7 @@
 #' The function is designed to work with KEGG, HMDB, T3DB, LipidMaps or a
 #' custom database provided by the user. You can use status, origin, and
 #' biofluid location arguments to select subset of metabolites in HMDB for
-#' annotation.  The "customIDs" argument can be used to only get confidence
+#' annotation.  The 'customIDs' argument can be used to only get confidence
 #' levels for a subset of metabolites.
 #' 
 #' KEGG.annotation, T3DB. annotation, HMDB.annotation, LipidMaps.annotation,
