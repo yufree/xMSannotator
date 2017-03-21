@@ -11,9 +11,8 @@ Service Subscriber.
 }
 \usage{
 ChemSpider.annotation(dataA, max.mz.diff = 10, queryadductlist = c("M+H"), 
-xMSannotator.outloc, numnodes = 1, 
-datasources = c("KEGG"), tokenstr = NA,
-maxhits = 30,syssleep=5)
+    xMSannotator.outloc, numnodes = 1, datasources = c("KEGG"), tokenstr = NA, 
+    maxhits = 30, syssleep = 5)
 }
 \arguments{
  \item{dataA}{Feature table from apLCMS or XCMS. 

@@ -1,3 +1,20 @@
+#' get_mz_by_monoisotopicmass
+#' 
+#' Generate list of expected m/z for a specific monoisotopic mass
+#' 
+#' 
+#' @param monoisotopicmass Monoisotopic mass. e.g.: 149.051
+#' @param dbid Database or user-defined ID. e.g.: "M001"
+#' @param name Metabolite name. e.g.: "Methionine"
+#' @param formula Chemical formula. e.g.: "C5H11NO2S"
+#' @param queryadductlist List of adducts to be used for searching.  eg:
+#' c("M+H","M+Na","M+K"), c("positive") for positive adducts, c("negative") for
+#' negative adducts c("all") for all adducts
+#' @param syssleep Wait time between queries to prevent overloading the KEGG
+#' REST interface. e.g.: 0.1
+#' @return Returns an R object with a list of expected m/z for the input
+#' monoisotopic mass.
+#' @author Karan Uppal
 get_mz_by_monoisotopicmass <-
 function(monoisotopicmass,dbid=NA,name=NA,formula=NA,queryadductlist=c("M+H"),max.mz.diff=10,syssleep=0.01,adduct_table=NA){
     cnames<-c("mz", "ID","Name","Formula","MonoisotopicMass","Adduct","AdductMass")

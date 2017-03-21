@@ -1,3 +1,13 @@
+#' get_brite_res
+#' 
+#' Get KEGG BRITE and pathway information for specific KEGG compound IDs.
+#' 
+#' 
+#' @param keggid Input KEGG compound ID. e.g.: "C00073"
+#' @return Return an R object with KEGG ID mapped to KEGG Brite category,
+#' pathway IDs, and links to external databases.
+#' @author Karan Uppal
+#' @keywords ~KEGG BRITE
 get_brite_res <-
 function(keggid){
 	

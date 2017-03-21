@@ -6,8 +6,7 @@ Generate list of expected m/z based on adducts for compounds in
 a given KEGG pathway.
 }
 \usage{
-get_mz_by_KEGGpathwayIDs(kegg_pathway_ids, 
-queryadductlist = c("M+H"), syssleep = 0.01)
+get_mz_by_KEGGpathwayIDs(kegg_pathway_ids, queryadductlist = c("M+H"), syssleep = 0.01)
 }
 \arguments{
   \item{kegg_pathway_ids}{

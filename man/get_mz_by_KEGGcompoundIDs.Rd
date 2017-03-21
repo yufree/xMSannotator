@@ -4,8 +4,7 @@
 \description{This function generates list of 
 expected m/z based on adducts for KEGG compounds.}
 \usage{
-get_mz_by_KEGGcompoundIDs(keggIDs, queryadductlist = c("M+H"), 
-syssleep = 0.01)
+get_mz_by_KEGGcompoundIDs(keggIDs, queryadductlist = c("M+H"), syssleep = 0.01)
 }
 \arguments{
   \item{keggIDs}{Vector of KEGG compound IDs. 

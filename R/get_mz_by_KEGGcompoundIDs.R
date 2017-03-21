@@ -1,3 +1,19 @@
+#' get_mz_by_KEGGcompoundIDs
+#' 
+#' This function generates list of expected m/z based on adducts for KEGG
+#' compounds.
+#' 
+#' 
+#' @param keggIDs Vector of KEGG compound IDs.  e.g.: c("C00073", "C00019")
+#' @param queryadductlist List of adducts to be used for searching.  eg:
+#' c("M+H","M+Na","M+K"), c("positive") for all positive adducts, c("negative")
+#' for all negative adducts, c("all") for all adducts
+#' @param syssleep Wait time between queries to prevent overloading the KEGG
+#' REST interface. e.g.: 0.1
+#' @return Returns an R object with a list of expected m/z for input list of
+#' KEGG compounds.
+#' @author Karan Uppal <kuppal2@@emory.edu>
+#' @keywords ~KEGG compounds ~get_mz_by_KEGGcompoundIDs
 get_mz_by_KEGGcompoundIDs <-
 function(keggIDs,queryadductlist=c("M+H"),max.mz.diff=10,syssleep=0.01,adduct_table=NA){
     cnames<-c("mz","chemical_ID", "Name", "Formula", "MonoisotopicMass", "Adduct","AdductMass")
