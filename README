@@ -10,3 +10,7 @@ biocLite("GO.db")
 biocLite("matrixStats")
 biocLite('WGCNA')
 devtools::install_github("yufree/xMSannotator")
+
+- source: https://sourceforge.net/projects/xmsannotator/
+- Formated by `formatR` package
+- Re-commented by `Rd2roxygen` package
