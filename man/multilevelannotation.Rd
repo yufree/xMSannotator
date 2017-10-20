@@ -6,16 +6,20 @@ The function uses a multi-level scoring algorithm to annotate features using HMD
 T3DB, and LipidMaps.
 }
 \usage{
-multilevelannotation(dataA, max.mz.diff = 10, max.rt.diff = 10, cormethod = "pearson", 
-    num_nodes = 2, queryadductlist = c("all"), mode = "pos", outloc, 
-    db_name = "HMDB", adduct_weights = NA, num_sets = 30, allsteps = TRUE, 
-    corthresh = 0.7, NOPS_check = TRUE, customIDs = NA, missing.value = NA, 
-    hclustmethod = "complete", deepsplit = 2, networktype = "unsigned", 
-    minclustsize = 10, module.merge.dissimilarity = 0.2, filter.by = c("M+H"), 
-    redundancy_check = TRUE, min_ions_perchem = 1, biofluid.location = NA, 
-    origin = NA, status = "Detected", boostIDs = NA, max_isp = 5, 
-    MplusH.abundance.ratio.check = FALSE, customDB = NA, HMDBselect = "union", 
-    mass_defect_window = 0.01, mass_defect_mode = "pos", pathwaycheckmode = "pm")
+multilevelannotation(dataA, max.mz.diff = 10, max.rt.diff = 10, 
+cormethod = "pearson", 
+num_nodes = 2, queryadductlist = c("all"), mode = "pos",
+outloc, db_name = "HMDB", adduct_weights = NA, num_sets = 3000,
+allsteps = TRUE, corthresh = 0.7, NOPS_check = TRUE, customIDs = NA,
+missing.value = NA, deepsplit = 2, 
+networktype = "unsigned",
+minclustsize = 10, module.merge.dissimilarity = 0.2, filter.by = c("M+H"),
+redundancy_check = TRUE,
+min_ions_perchem = 1, biofluid.location = NA, origin = NA,
+status = NA, boostIDs = NA, max_isp = 5,
+MplusH.abundance.ratio.check = FALSE, 
+customDB = NA, HMDBselect = "union", mass_defect_window = 0.01,
+mass_defect_mode = "pos",  pathwaycheckmode = "pm")
 }
 \arguments{
   \item{dataA}{
@@ -85,12 +89,6 @@ Run data(customIDs) to see an example.
   \item{missing.value}{
 How are missing values represented in the input
 peak intensity matrix? e.g.: NA
-}
- \item{hclustmethod}{ 
- Linkage method for hierarchical clustering
- e.g.: "complete", "average", "single","ward",
- "median","centroid","mcquitty". Please see
- flashClust package for reference.
 }
   \item{deepsplit}{
 How finely should the clusters be split? e.g.: 2

@@ -2,8 +2,8 @@ Package: xMSannotator
 Type: Package
 Title: xMSannotator: R package for network based annotation of
         metabolomics data.
-Version: 1.2.1
-Date: 2017-01-04
+Version: 1.3.2
+Date: 2017-06-29
 Author: Karan Uppal
 Maintainer: Karan Uppal <kuppal2@emory.edu>
 Description: xMSannotator includes functions for metabolite annotation using HMDB, KEGG, LipidMaps, T3DB,  and ChemSpider. The package also includes utilites for querying KEGG using the REST interface.
@@ -13,5 +13,4 @@ Depends: R (>= 2.10), XML, R2HTML, WGCNA, RCurl, doSNOW, foreach,
         SSOAP, png, rjson, snow, plyr, KEGGREST, flashClust,
         pcaMethods, Rdisop
 NeedsCompilation: no
-Packaged: 2017-01-13 16:45:06 UTC; Karan
-RoxygenNote: 6.0.1
+Packaged: 2017-06-29 21:39:44 UTC; Karan

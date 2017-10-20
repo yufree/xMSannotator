@@ -1,10 +1,22 @@
 get_chemscorev1.6.71 <-
 function(chemicalid,mchemicaldata,corthresh,global_cor,mzid,max_diff_rt=10,level_module_isop_annot,
-adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, MplusH.abundance.ratio.check=TRUE,mass_defect_window=0.01,mass_defect_mode="pos")
+adduct_table,adduct_weights,filter.by=c("M+H"),max_isp=100, MplusH.abundance.ratio.check=TRUE,mass_defect_window=0.01,mass_defect_mode="pos",outlocorig)
 {
     
+   
     #new
+    #print("here")
+    setwd(outlocorig)
+   # load("step1_results.Rda")
     
+  #  load("global_cor.Rda")
+    
+   
+    
+    outloc1<-paste(outlocorig,"/stage2/",sep="")
+	suppressWarnings(dir.create(outloc1))
+	setwd(outloc1)	
+
     mchemicaldata$mz<-as.numeric(as.character(mchemicaldata$mz))
     
     mchemicaldata$time<-as.numeric(as.character(mchemicaldata$time))
@@ -30,7 +42,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
         
         
         mchemicaldata_orig<-mchemicaldata
-        # print(mchemicaldata)
+       
         #if(FALSE)
         {
             if(length(which(mchemicaldata_orig$Adduct%in%as.character(adduct_weights[,1])))>0){
@@ -95,24 +107,24 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
         top_mod<-names(table_mod)
         
         
-        #	#print("heress ")
-        #	#print("top mod A")
-        #print(table_mod)
+ 
         
         bool_check<-0
-        final_isp_annot_res<-mchemicaldata
+        final_isp_annot_res_all<-mchemicaldata
         level_module_isop_annot<-as.data.frame(level_module_isop_annot)
         level_module_isop_annot$Module_RTclust<-gsub(level_module_isop_annot$Module_RTclust,pattern="_[0-9]*",replacement="")
         
         #for(m in  1:length(mchemicaldata$mz))
         
         mchemicaldata_goodadducts_index<-which(mchemicaldata$Adduct%in%as.character(adduct_weights[,1]))
-        
+        final_isp_annot_res_isp<-{}
+	
+	if(length(mchemicaldata_goodadducts_index)>0){
         final_isp_annot_res_isp<-lapply(1:length(mchemicaldata_goodadducts_index),function(i)
         {
-            
+		
             m<-mchemicaldata_goodadducts_index[i]
-            final_isp_annot_res<-mchemicaldata[m,]
+            final_isp_annot_res<-cbind(paste("group",i,sep=""),mchemicaldata[m,])
             isp_group<-as.character(mchemicaldata$ISgroup[m])
             module_rt_group<-as.character(mchemicaldata$Module_RTclust[m])
             module_rt_group<-gsub(module_rt_group,pattern="_[0-9]*",replacement="")
@@ -120,23 +132,27 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
             isp_mat_module_rt_group<-as.character(level_module_isop_annot$Module_RTclust)
             
             query_md<-mchemicaldata$mz[m]-round(mchemicaldata$mz[m])
+	    
+	    query_rt<-mchemicaldata$time[m]
             
             query_int<-1*(mchemicaldata$mean_int_vec[m])
             #print(query_int)
             #put_isp_masses_curmz_data<-level_module_isop_annot[which(abs((level_module_isop_annot$MD)-(query_md))<0.01 & isp_mat_module_rt_group==module_rt_group & level_module_isop_annot$AvgIntensity<query_int),]
             
-            
-            put_isp_masses_curmz_data<-level_module_isop_annot[which(abs((level_module_isop_annot$MD)-(query_md))<mass_defect_window & isp_mat_module_rt_group==module_rt_group & level_module_isop_annot$AvgIntensity<query_int),]
+                        put_isp_masses_curmz_data<-level_module_isop_annot[which(abs(level_module_isop_annot$time-query_rt)<max_diff_rt & abs((level_module_isop_annot$MD)-(query_md))<mass_defect_window & isp_mat_module_rt_group==module_rt_group & level_module_isop_annot$AvgIntensity<query_int),]
+              #put_isp_masses_curmz_data<-level_module_isop_annot[which(abs((level_module_isop_annot$MD)-(query_md))<mass_defect_window & isp_mat_module_rt_group==module_rt_group & level_module_isop_annot$AvgIntensity<query_int),]
+         
+          #  put_isp_masses_curmz_data<-level_module_isop_annot[which(abs((level_module_isop_annot$MD)-(query_md))<mass_defect_window & isp_mat_module_rt_group==module_rt_group & level_module_isop_annot$AvgIntensity<query_int),]
             
             put_isp_masses_curmz_data<-as.data.frame(put_isp_masses_curmz_data)
             put_isp_masses_curmz_data$mz<-as.numeric(as.character(put_isp_masses_curmz_data$mz))
             put_isp_masses_curmz_data$time<-as.numeric(as.character(put_isp_masses_curmz_data$time))
             mchemicaldata<-as.data.frame(mchemicaldata)
-            #put_isp_masses_curmz_data$mz<-as.numeric(put_isp_masses_curmz_data$mz)
-            #put_isp_masses_curmz_data<-put_isp_masses_curmz_data[which(put_isp_masses_curmz_data$mz>=mchemicaldata$mz[m] & put_isp_masses_curmz_data$mz<(mchemicaldata$mz[m]+5)),]
-            #put_isp_masses_curmz_data<-put_isp_masses_curmz_data[,c(1:2,5)]
+            
             put_isp_masses_curmz_data<-unique(put_isp_masses_curmz_data)
             put_isp_masses_curmz_data<-put_isp_masses_curmz_data[order(put_isp_masses_curmz_data$mz),]
+	    
+	    
             if(length(put_isp_masses_curmz_data)>0){
                 #int_vec<-apply(put_isp_masses_curmz_data[,-c(1:12)],1,max)
                 int_vec<-put_isp_masses_curmz_data[,c(5)]
@@ -148,8 +164,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                 curformula<-gsub(curformula,pattern="Sc",replacement="")
                 curformula<-gsub(curformula,pattern="Sm",replacement="")
                 
-                #print(curformula)
-                
+           
                 
                 if(FALSE){
                     numchlorine<-check_element(curformula,"Cl")
@@ -165,27 +180,13 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                     max_isp_count=1
                 }
                 
-                if(FALSE){
-                    if(numbromine>0){
-                        
-                        ischeck<-which(int_vec<=0.5)
-                    }else{
-                        
-                        if(numchlorine>0){
-                            
-                            ischeck<-which(int_vec<=0.5)
-                        }else{
-                            
-                            ischeck<-which(int_vec<=0.5)
-                        }
-                        
-                    }
-                }
+     
                 
                 ischeck<-which(int_vec<=max(abund_ratio_vec[-c(1)]+0.10))
-                
+               
 		put_isp_masses_curmz_data[,2]<-as.numeric(as.character(put_isp_masses_curmz_data[,2]))
                 if(length(ischeck)>0){
+		
                     for(rnum in 1:length(ischeck)){
                         temp_var<-{}
                         bool_check<-1
@@ -194,11 +195,13 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                         
 			isp_v<-as.numeric(as.character(isp_v))
                         #print(isp_v)
-                       
+                        #print(put_isp_masses_curmz_data[isp_v,])
+
+                       # print(mchemicaldata[m,2])
                         diff_rt<-abs(put_isp_masses_curmz_data[isp_v,2]-mchemicaldata[m,2])
                         isnum<-(round(put_isp_masses_curmz_data[isp_v,1])-round(mchemicaldata[m,1]))
                         bool_check<-1
-                       
+                        #print(mass_defect_mode)
 			
                         if(mass_defect_mode=="neg" | mass_defect_mode=="both"){
                             
@@ -216,46 +219,10 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                         }
                         
                         if(diff_rt<max_diff_rt & isnum<=max_isp){
+			
+			
                             max_isp_count=max_isp
-                            
-                            
-                            
-                            if(FALSE){
-                                max_isp_count=1
-                                if(isnum>=2 && isnum<=4){
-                                    
-                                    
-                                    
-                                    curformula<-gsub(curformula,pattern="Sr",replacement="")
-                                    curformula<-gsub(curformula,pattern="Sn",replacement="")
-                                    curformula<-gsub(curformula,pattern="Se",replacement="")
-                                    curformula<-gsub(curformula,pattern="Sc",replacement="")
-                                    curformula<-gsub(curformula,pattern="Sm",replacement="")
-                                    
-                                    numchlorine<-check_element(curformula,"Cl")
-                                    numsulphur<-check_element(curformula,"S")
-                                    numbromine<-check_element(curformula,"Br")
-                                    
-                                    temp_max_isp_count<-max_isp_count #max(numchlorine,numsulphur,numbromine)
-                                    
-                                    if(temp_max_isp_count==0){
-                                        bool_check<-0
-                                        max_isp_count=1
-                                    }else{
-                                        #bool_check<-1
-                                        # max_isp_count=max_isp
-                                    }
-                                }else{
-                                    
-                                    if(isnum<0){
-                                        max_isp_count=0
-                                    }else{
-                                        max_isp_count=max_isp
-                                    }
-                                }
-                            }
-                            
-                            
+
                             if(max_isp_count>0 && isnum<=max_isp_count && bool_check>0){
                                 
                                 isnum2<-(round(put_isp_masses_curmz_data[isp_v,1])-round(mchemicaldata$MonoisotopicMass[m]))
@@ -303,7 +270,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                                     temp_var$Adduct<-paste(mchemicaldata[m,9],"_[",isp_sign,(abs(isnum)),"]",sep="")
                                     
                                     temp_var<-as.data.frame(temp_var)
-                                    
+                                    temp_var<-cbind(paste("group",i,sep=""),temp_var)
                                     final_isp_annot_res<-as.data.frame(final_isp_annot_res)
                                     
                                     #write.table(temp_var,file="temp_var.txt",sep="\t")
@@ -332,24 +299,39 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                     }
                 }
                 
+		
             }
             return(final_isp_annot_res)
         })
         
-        #print(final_isp_annot_res_isp)
+	
        
 	rm(level_module_isop_annot) 
         final_isp_annot_res2<-ldply(final_isp_annot_res_isp,rbind)
         
+	
+	isp_group_check<-table(final_isp_annot_res2[,1])
+	good_groups<-which(isp_group_check==max(isp_group_check))
+	
+	group_name<-names(isp_group_check)[good_groups]
+	final_isp_annot_res2<-as.data.frame(final_isp_annot_res2)
+	
+	final_isp_annot_res2<-final_isp_annot_res2 #[which(final_isp_annot_res2[,1]%in%group_name),]
+	
+	final_isp_annot_res2<-final_isp_annot_res2[,-c(1)]
+	final_isp_annot_res2<-as.data.frame(final_isp_annot_res2)
+	
         rm(final_isp_annot_res_isp)
         
         
         #write.table(temp_var,file="finaltempvar.txt",sep="\t",row.names=FALSE)
         
-        mchemicaldata<-rbind(final_isp_annot_res,final_isp_annot_res2)  #[,-c(12)]
+        mchemicaldata<-rbind(final_isp_annot_res_all,final_isp_annot_res2)  #[,-c(12)]
+	
+	}
         mchemicaldata<-unique(mchemicaldata)
         
-	#return(mchemicaldata)
+	
         
         bad_rows<-which(is.na(mchemicaldata$mz)==TRUE)
         if(length(bad_rows)>0){
@@ -362,8 +344,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
         mod_names<-mchemicaldata$Module_RTclust
         mod_names<-unique(mod_names)
         
-        #print(mchemicaldata)
-        #print(mod_names)
+       
 
 	mzid_cur<-paste(mchemicaldata$mz,mchemicaldata$time,sep="_") #mzid_cur<-paste(curmchemdata$mz,curmchemdata$time,sep="_") #mzid_cur<-paste(chem_score$filtdata$mz,chem_score$filtdata$time,sep="_")
 
@@ -388,13 +369,13 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                 subdata<-mchemicaldata[which(mchemicaldata$Module_RTclust==groupA_num),]
                 subdata<-subdata[order(subdata$time),]
                 
-                #print("here")
+                
                 
                 if(nrow(subdata)>0){
                     
                     #print(subdata)
                     #print(length(subdata))
-                    groupB<-group_by_rt_hist(subdata,time_step=1,max_diff_rt=10,groupnum=groupA_num)
+                    groupB<-group_by_rt_histv2(subdata,time_step=1,max_diff_rt=10,groupnum=groupA_num)
                     
                 }else{
                     groupB<-subdata
@@ -538,7 +519,8 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                     
                     mat_rownames<-strsplit(as.character(corrownamesA),split="_")
                     
-                    
+                  #  print(mchemicaldata)
+                    #print(cor_mz)
                     m1<-{}
                     for(i in 1:length(mat_rownames)){m1<-rbind(m1,cbind(mat_rownames[[i]] [1],mat_rownames[[i]][2]))}
                     m1<-as.data.frame(m1)
@@ -569,7 +551,8 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                         
                     }
                     
-                  
+                    
+                    
                     
                     #return(cor_mz)
                     #at least score of 2
@@ -650,7 +633,8 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                             second_level_associations<-c(second_level_associations,which(cor_mz[l,]>=0.7))
                             
                         }
-                        
+                        #print("layer one")
+                      #  print(layer_one_associations)
                         selected_mz<-c(hub_mz,layer_one_associations) #intersect(layer_one_associations,second_level_associations))
                         
                         selected_mz<-unique(selected_mz)
@@ -690,10 +674,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                         
                         diff_rt<-round(diff_rt)
                         
-                        #print(diff_rt)
                         
-                        #print("THIS ONE")
-                        #print("get confidence stage2")
                         
                         
                         if(length(which(is.na(mchemicaldata$time))==TRUE)>0){
@@ -703,12 +684,11 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                         if(nrow(mchemicaldata)<2){
                             next
                         }
-                        #print(head(mchemicaldata))
                         
                         
                         
-                        #print(mchemicaldata)
                         
+                    
                         if(diff_rt<=max_diff_rt)
                         {
                             
@@ -792,7 +772,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                             
                             groupnumA<-unique(mchemicaldata$Module_RTclust)
                             
-                            mchemicaldata<-group_by_rt_hist(mchemicaldata,time_step=1,max_diff_rt=max_diff_rt,groupnum=groupnumA)
+                            mchemicaldata<-group_by_rt_histv2(mchemicaldata,time_step=1,max_diff_rt=max_diff_rt,groupnum=groupnumA)
                             
                             #print("done")
                             top_mod_sub<-table(mchemicaldata$Module_RTclust)
@@ -1044,8 +1024,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
                                                     chemical_score<-100*chemical_score
                                                 }
                                                 
-                                                #print("chem score")
-                                                #print(chemical_score)
+                                                
                                             }else{
                                                 chemical_score<-0
                                             }
@@ -1606,7 +1585,7 @@ adduct_table,adduct_weights,degree_weights,filter.by=c("M+H"),max_isp=100, Mplus
         
         #
         #print(best_chemical_score)
-        rm("mzid","global_cor")
+        rm("mzid","global_cor","temp_global_cor")
         
         return(list("chemical_score"=chemical_score,"filtdata"=mchemicaldata))
     }

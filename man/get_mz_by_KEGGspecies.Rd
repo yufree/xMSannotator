@@ -7,8 +7,8 @@ expected m/z based on adducts for all compounds associated
 with a species.
 }
 \usage{
-get_mz_by_KEGGspecies(kegg_species_code = "hsa", queryadductlist = c("M+H"), 
-    syssleep = 0.01)
+get_mz_by_KEGGspecies(kegg_species_code = "hsa",
+queryadductlist = c("M+H"),syssleep=0.01)
 }
 \arguments{
   \item{kegg_species_code}{

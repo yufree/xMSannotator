@@ -5,8 +5,9 @@
 Generate list of expected m/z for a specific monoisotopic mass
 }
 \usage{
-get_mz_by_monoisotopicmass(monoisotopicmass, dbid = NA, name = NA, formula = NA, 
-    queryadductlist = c("M+H"), syssleep = 0.01)
+get_mz_by_monoisotopicmass(monoisotopicmass, dbid = NA,
+name = NA, formula = NA, queryadductlist = c("M+H"), 
+syssleep = 0.01)
 }
 \arguments{
   \item{monoisotopicmass}{

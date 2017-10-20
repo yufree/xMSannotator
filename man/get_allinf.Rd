@@ -8,7 +8,7 @@ KEGG Pathway IDs, SMPDB IDs, HMDB Status, HMDB
 source, etc. depending upon the database.
 }
 \usage{
-get_allinf(dataA, dbname)
+get_allinf(dataA,dbname)
 }
 \arguments{
   \item{dataA}{
@@ -27,3 +27,4 @@ pathway IDs, etc.
 \author{
 Karan Uppal
 }
+
