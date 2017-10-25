@@ -1,11 +1,10 @@
-moduleEigengenes2 <-
-function (expr, colors, impute = TRUE, nPC = 1, align = "along average",
-    excludeGrey = FALSE, grey = ifelse(is.numeric(colors), 0, 
-        "grey"), subHubs = TRUE, trapErrors = FALSE, returnValidOnly = trapErrors, 
-    softPower = 6, scale = TRUE, verbose = 0, indent = 0) 
-{
+moduleEigengenes2 <- function(expr, colors, impute = TRUE, 
+    nPC = 1, align = "along average", excludeGrey = FALSE, 
+    grey = ifelse(is.numeric(colors), 0, "grey"), subHubs = TRUE, 
+    trapErrors = FALSE, returnValidOnly = trapErrors, softPower = 6, 
+    scale = TRUE, verbose = 0, indent = 0) {
     spaces = indentSpaces(indent)
-
+    
     if (verbose == 1) 
         printFlush(paste(spaces, "moduleEigengenes: Calculating", 
             nlevels(as.factor(colors)), "module eigengenes in given set."))
@@ -31,8 +30,8 @@ function (expr, colors, impute = TRUE, nPC = 1, align = "along average",
     alignRecognizedValues = c("", "along average")
     if (!is.element(align, alignRecognizedValues)) {
         printFlush(paste("ModulePrincipalComponents: Error:", 
-            "parameter align has an unrecognised value:", align, 
-            "; Recognized values are ", alignRecognizedValues))
+            "parameter align has an unrecognised value:", 
+            align, "; Recognized values are ", alignRecognizedValues))
         stop()
     }
     maxVarExplained = 10
@@ -46,15 +45,16 @@ function (expr, colors, impute = TRUE, nPC = 1, align = "along average",
             0) {
             modlevels = modlevels[as.character(modlevels) != 
                 as.character(grey)]
-        }
-        else {
+        } else {
             stop(paste("Color levels are empty. Possible reason: the only color is grey", 
                 "and grey module is excluded from the calculation."))
         }
     PrinComps = data.frame(matrix(NA, nrow = dim(expr)[[1]], 
         ncol = length(modlevels)))
-    averExpr = data.frame(matrix(NA, nrow = dim(expr)[[1]], ncol = length(modlevels)))
-    varExpl = data.frame(matrix(NA, nrow = nVarExplained, ncol = length(modlevels)))
+    averExpr = data.frame(matrix(NA, nrow = dim(expr)[[1]], 
+        ncol = length(modlevels)))
+    varExpl = data.frame(matrix(NA, nrow = nVarExplained, 
+        ncol = length(modlevels)))
     validMEs = rep(TRUE, length(modlevels))
     validAEs = rep(FALSE, length(modlevels))
     isPC = rep(TRUE, length(modlevels))
@@ -75,7 +75,7 @@ function (expr, colors, impute = TRUE, nPC = 1, align = "along average",
         datModule = as.matrix(t(expr[, restrict1]))
         n = dim(datModule)[1]
         p = dim(datModule)[2]
-	return(datModule)
+        return(datModule)
         pc = try({
             if (nrow(datModule) > 1 && impute) {
                 seedSaved = FALSE
@@ -161,22 +161,22 @@ function (expr, colors, impute = TRUE, nPC = 1, align = "along average",
             isPC[i] = FALSE
             isHub[i] = FALSE
             validColors[restrict1] = grey
-        }
-        else {
+        } else {
             PrinComps[, i] = pc
             ae = try({
-		 return(datModule)
+                return(datModule)
                 if (isPC[i]) 
-		   
-                  scaledExpr = scale(t(datModule))
-                averExpr[, i] = apply(scaledExpr, 1, mean, na.rm = TRUE)
+                  
+                scaledExpr = scale(t(datModule))
+                averExpr[, i] = apply(scaledExpr, 1, mean, 
+                  na.rm = TRUE)
                 if (align == "along average") {
                   if (verbose > 4) 
                     printFlush(paste(spaces, " .. aligning module eigengene with average expression."))
-		
-		#return(averExpr)
-                  if (cor(averExpr[, i], PrinComps[, i], use = "p") < 
-                    0) 
+                  
+                  # return(averExpr)
+                  if (cor(averExpr[, i], PrinComps[, i], 
+                    use = "p") < 0) 
                     PrinComps[, i] = -PrinComps[, i]
                 }
                 0
@@ -209,8 +209,9 @@ function (expr, colors, impute = TRUE, nPC = 1, align = "along average",
     }
     allPC = (sum(!isPC) == 0)
     allAEOK = (sum(!validAEs) == 0)
-    list(eigengenes = PrinComps, averageExpr = averExpr, varExplained = varExpl, 
-        nPC = nPC, validMEs = validMEs, validColors = validColors, 
-        allOK = allOK, allPC = allPC, isPC = isPC, isHub = isHub, 
-        validAEs = validAEs, allAEOK = allAEOK)
+    list(eigengenes = PrinComps, averageExpr = averExpr, 
+        varExplained = varExpl, nPC = nPC, validMEs = validMEs, 
+        validColors = validColors, allOK = allOK, allPC = allPC, 
+        isPC = isPC, isHub = isHub, validAEs = validAEs, 
+        allAEOK = allAEOK)
 }

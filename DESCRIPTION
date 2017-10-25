@@ -14,3 +14,4 @@ Depends: R (>= 2.10), XML, R2HTML, WGCNA, RCurl, doSNOW, foreach,
         pcaMethods, Rdisop
 NeedsCompilation: no
 Packaged: 2017-06-29 21:39:44 UTC; Karan
+RoxygenNote: 6.0.1
