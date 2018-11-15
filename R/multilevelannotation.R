@@ -770,10 +770,10 @@ multilevelannotation <- function(dataA, max.mz.diff = 10,
                             # print(adduct_names)
                             
                             mz_search_list <- get_mz_by_monoisotopicmass(monoisotopicmass = as.numeric(as.character(inputmassmat[m, 
-                              4])), dbid = inputmassmat[m, 
+                              3])), dbid = inputmassmat[m, 
                               1], name = as.character(inputmassmat[m, 
                               2]), formula = as.character(inputmassmat[m, 
-                              3]), queryadductlist = adduct_names, 
+                              4]), queryadductlist = adduct_names, 
                               adduct_table = adduct_table)
                             
                             return(mz_search_list)
