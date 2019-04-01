@@ -106,7 +106,7 @@ get_mz_by_monoisotopicmass <- function(monoisotopicmass,
         
         # mz=((adductnmol*exact_mass)+(adductmass))/(adductcharge))
         
-        mz = ((exact_mass * adductnmol) + (adductmass))/adductcharge
+        mz = ((exact_mass * as.numeric(adductnmol)) + (as.numeric(adductmass)))/as.numeric(adductcharge)
         
         # delta_ppm=(max.mz.diff)*(mz/1000000)
         # min_mz=round((mz-delta_ppm),5)
