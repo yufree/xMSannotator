@@ -17,7 +17,7 @@ get_confidence_stage2.1 <- function(curdata, max_diff_rt,
         replacement = "")
     # cur_adducts<-gsub(cur_adducts_with_isotopes,pattern='(_\\[\\-[0-9]*\\])',replacement='')
     
-    if (is.na(adduct_weights) == TRUE) {
+    if (is.na(adduct_weights)[1] == TRUE) {
         data(adduct_table)
         data(adduct_weights)
         adduct_weights1 <- matrix(nrow = 2, ncol = 2, 0)
