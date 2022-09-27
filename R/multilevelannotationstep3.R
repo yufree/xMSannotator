@@ -43,7 +43,7 @@ multilevelannotationstep3 <- function(outloc1, adduct_weights = NA,
     outloc <- outloc1
     
     
-    if (is.na(adduct_weights) == TRUE) {
+    if (is.na(adduct_weights)[1] == TRUE) {
         data(adduct_weights)
         adduct_weights <- as.data.frame(adduct_weights)
         # print(dim(adduct_weights))
