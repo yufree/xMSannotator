@@ -38,7 +38,7 @@ multilevelannotationstep2 <- function(outloc1, list_number) {
     outloc1 <- paste(outloc, "/stage2/", sep = "")
     suppressWarnings(dir.create(outloc1))
     setwd(outloc1)
-    if (is.na(adduct_weights) == TRUE) {
+    if (is.na(adduct_weights)[1] == TRUE) {
         data(adduct_weights)
         
         adduct_weights1 <- matrix(nrow = 2, ncol = 2, 0)
