@@ -161,7 +161,7 @@ multilevelannotation <- function(dataA,
 
 
 
-    if (is.na(customIDs) == FALSE) {
+    if (is.na(customIDs)[1] == FALSE) {
         customIDs = as.data.frame(customIDs)
     }
 
@@ -689,7 +689,7 @@ multilevelannotation <- function(dataA,
 
                 # }
 
-                suppressWarnings(if (is.na(customIDs) ==
+                suppressWarnings(if (is.na(customIDs)[1] ==
                                      FALSE) {
                     customIDs <- unique(customIDs)
 
@@ -734,7 +734,7 @@ multilevelannotation <- function(dataA,
 
 
 
-                    suppressWarnings(if (is.na(customIDs) ==
+                    suppressWarnings(if (is.na(customIDs)[1] ==
                                          FALSE) {
                         customIDs <- unique(customIDs)
 
