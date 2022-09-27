@@ -494,7 +494,7 @@ multilevelannotation <- function(dataA,
 
 
 
-                suppressWarnings(if (is.na(customIDs) ==
+                suppressWarnings(if (is.na(customIDs)[1] ==
                                      TRUE) {
                     customIDs <- hmdbAllinfv3.6[, c(1, 20)]
 
@@ -889,7 +889,7 @@ multilevelannotation <- function(dataA,
             }
             data(adduct_table)
 
-            if (is.na(adduct_weights) == TRUE) {
+            if (is.na(adduct_weights)[1] == TRUE) {
                 data(adduct_weights)
                 adduct_weights1 <- matrix(nrow = 2, ncol = 2,
                                           0)
