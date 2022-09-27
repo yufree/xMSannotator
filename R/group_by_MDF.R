@@ -28,7 +28,7 @@ adduct_table,adduct_weights)
 		
 	#mchemicaldata$Module_RTclust<-gsub(mchemicaldata$Module_RTclust,pattern="_[0-9]*",replacement="")
 
-	if(is.na(adduct_weights)==TRUE){
+	if(is.na(adduct_weights)[1]==TRUE){
 	adduct_weights1<-matrix(nrow=2,ncol=2,0)
 		adduct_weights1[1,]<-c("M+H",1)
 		adduct_weights1[2,]<-c("M-H",1)
