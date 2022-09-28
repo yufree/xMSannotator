@@ -16,16 +16,6 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
     chemscoremat_highconf <- as.data.frame(chemscoremat_highconf)
     chemscoremat_highconf$mz <- as.numeric(chemscoremat_highconf$mz)
     
-    if (FALSE) {
-        chemscoremat_highconf$Name <- gsub(chemscoremat_highconf$Name, 
-            pattern = "[\\\"']", replacement = "")
-        
-        chemscoremat_highconf$Formula <- gsub(chemscoremat_highconf$Formula, 
-            pattern = "[\\\"']", replacement = "")
-        
-        chemscoremat_highconf$Adduct <- gsub(chemscoremat_highconf$Adduct, 
-            pattern = "[\\\"']", replacement = "")
-    }
     cnames <- colnames(chemscoremat_highconf)
     
     cnames <- gsub(cnames, pattern = ".x", replacement = "")
@@ -146,7 +136,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   Confidence <- 0
                   # print(final_res)
                   if (final_res[1] != "None") {
-                    if (is.na(final_res[1, 1]) == FALSE) {
+                    if (is.na(final_res[1, 1])[1] == FALSE) {
                       
                       
                       Confidence <- as.numeric(as.character(final_res[, 
@@ -200,31 +190,9 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   if (curdata$score[1] < 10) {
                     if (length(unique(curdata$Adduct)) < 2) {
                       Confidence <- 0
-                    } else {
-                      if (FALSE) {
-                        if (Confidence < 2) {
-                          
-                          if (length(which(curdata$Adduct %in% adduct_weights[which(adduct_weights[,2] > 1), 1])) > 0) {
-                            
-                            if (curdata$score[1] > 10) {
-                              # Confidence<-2
-                              
-                              mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 1] %in% curdata$Adduct), 
-                                2])))[1]
-                              curdata <- curdata[which(curdata$Adduct %in% 
-                                adduct_weights[which(as.numeric(as.character(adduct_weights[, 
-                                  2])) >= mnum), 1]), ]
-                              Confidence <- 2
-                              
-                            }
-                          }
-                        }
-                      }
-                    }
+                    } 
                   }
                 }
-                
-                print('check3')
                 curdata <- cbind(Confidence, curdata)
                 curdata <- as.data.frame(curdata)
                 
@@ -281,21 +249,6 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
     
     isp_ind <- which(curated_res_isp_check > 0)
     
-    if (FALSE) {
-        if (length(isp_ind) > 0) {
-            
-            formula_vec <- curated_res$Formula  #aregexpr(text=curated_res$Formula,pattern='(_\\[(\\+|\\-)[0-9]*\\])')
-            formula_vec <- gsub(x = formula_vec, pattern = "[a-z|+|-|0-9]*_", 
-                replacement = "", ignore.case = T)
-            # print(formula_vec) print(formula_vec[isp_ind])
-            # temp_adducts<-as.character(paste('M','_',formula_vec[isp_ind],sep=''))
-            curated_res$Adduct <- as.character(curated_res$Adduct)
-            # print(curated_res$Adduct) print(temp_adducts)
-            # print(curated_res$Adduct[isp_ind])
-            curated_res$Adduct[isp_ind] <- as.character(temp_adducts)
-            # print(curated_res$Adduct[isp_ind])
-        }
-    }
     
     # write.table(curated_res,file='confidence_levels_chemicals.txt',sep='\t',row.names=FALSE)
     
@@ -306,33 +259,6 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
     suppressWarnings(dir.create(outloc3))
     setwd(outloc3)
     
-    
-    
-    if (FALSE) {
-        d2 <- read.table("Stage2.txt", sep = "\t", header = TRUE)
-        
-        d3pres <- d2[-which(d2$mz %in% curated_res$mz), ]
-        d3pres <- d3pres[-which(d3pres$chemical_ID %in% curated_res$chemical_ID), 
-            ]
-        d3pres <- d3pres[which(d3pres$Adduct %in% adduct_weights[, 
-            1]), ]
-        
-        conf_vec <- rep(1, length(d3pres[, 1]))
-        score_vec <- rep(1, length(d3pres[, 1]))
-        d6pres <- cbind(conf_vec, d3pres[, 5], score_vec, 
-            d3pres[, 11], d3pres[, 1:4], d3pres[, 6:10], 
-            d3pres[, 13:14])
-        
-        print(curated_res[1:2, 1:15])
-        print(d6pres[1:2, 1:15])
-        print(dim(d6pres))
-        print(dim(curated_res))
-        
-        curated_res <- curated_res[, c(1:15)]
-        
-        colnames(d6pres) <- colnames(curated_res)
-        curated_res <- rbind(curated_res, d6pres)
-    }
     curated_res <- as.data.frame(curated_res)
     
     
@@ -489,20 +415,6 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
     
     write.csv(curated_res, file = "Stage4.csv", row.names = FALSE)
     
-    
-    
-    if (FALSE) {
-        fname = paste("Stage4_annotation_results", sep = "")
-        unlink(fname)
-        
-        HTMLInitFile(filename = fname, Title = "Stage 4 annotation results", 
-            outdir = outloc)
-        fname = paste(outloc, "/Stage4_annotation_results.html", 
-            sep = "")
-        HTML(curated_res, file = fname, Border = 1, innerBorder = 1, 
-            useCSS = TRUE)
-        HTMLEndFile(file = fname)
-    }
     
     # print(head(curated_res))
     
