@@ -156,7 +156,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                       curdata <- final_res  #[,-c(1)]
                       
                       rm(final_res)
-                      if (Confidence < 2) {
+                      if (Confidence[1] < 2) {
                         
                         if (length(which(curdata$Adduct %in% 
                           adduct_weights[which(as.numeric(adduct_weights[, 
