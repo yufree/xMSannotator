@@ -123,7 +123,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                 curdata <- curdata[order(curdata$Adduct), 
                   ]
                 
-                if ((is.na(filter.by) == FALSE) && (bool_check == 
+                if ((is.na(filter.by)[1] == FALSE) && (bool_check == 
                   1)) {
                   
                   check_adduct <- which(curdata$Adduct %in% 
@@ -162,7 +162,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                           adduct_weights[which(as.numeric(adduct_weights[, 
                             2]) > 0), 1])) > 0) {
                           
-                          if (curdata$score > 10) {
+                          if (curdata$score[1] > 10) {
                             
                             mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
                               1] %in% curdata$Adduct), 2])))[1]
@@ -181,7 +181,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   if (length(which(curdata$Adduct %in% adduct_weights[, 
                     1])) > 0) {
                     
-                    if (curdata$score >= 10) {
+                    if (curdata$score[1] >= 10) {
                       
                       # curdata<-curdata[which(curdata$Adduct%in%adduct_weights[,1]),]
                       mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
@@ -200,7 +200,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                 }
                 
                 if (nrow(curdata) > 1) {
-                  if (curdata$score < 10) {
+                  if (curdata$score[1] < 10) {
                     if (length(unique(curdata$Adduct)) < 
                       2) {
                       
@@ -213,7 +213,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                             adduct_weights[which(adduct_weights[, 
                               2] > 1), 1])) > 0) {
                             
-                            if (curdata$score > 10) {
+                            if (curdata$score[1] > 10) {
                               # Confidence<-2
                               
                               mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
@@ -379,7 +379,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
     curated_res <- curated_res[order(curated_res$Confidence, 
         decreasing = TRUE), ]
     
-    if (is.na(boostIDs) == FALSE) {
+    if (is.na(boostIDs)[1] == FALSE) {
         
         cnames_boost <- colnames(boostIDs)
         
@@ -398,7 +398,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
             g1 <- ghilicpos$common
             rm(ghilicpos)
             
-            if (is.na(max_diff_rt) == FALSE) {
+            if (is.na(max_diff_rt)[1] == FALSE) {
                 # g1<-g1[order(g1$index.B,g1$time.difference),]
                 
                 t1 <- table(g1$index.B)
@@ -445,9 +445,9 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                 temp_ind1 <- g1$index.A[ind2]
                 temp_ind2 <- g1$index.B[ind2]
                 
-                
-                if (curated_res$chemical_ID[temp_ind1] %in% 
-                  boostIDs$ID[temp_ind2]) {
+                ttt <- curated_res$chemical_ID[temp_ind1] %in% 
+                  boostIDs$ID[temp_ind2]
+                if (ttt[1]) {
                   
                   good_ind_1 <- c(good_ind_1, g1$index.A[ind2])
                 }
