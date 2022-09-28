@@ -153,7 +153,6 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                         1]))
                       
                       curdata <- final_res  #[,-c(1)]
-                      print('check0')
                       rm(final_res)
                       if (Confidence[1] < 2) {
                         
@@ -201,23 +200,19 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                 
                 if (nrow(curdata) > 1) {
                   if (curdata$score[1] < 10) {
-                    if (length(unique(curdata$Adduct)) < 
-                      2) {
-                      
+                    if (length(unique(curdata$Adduct)) < 2) {
+                        print('check2')
                       Confidence <- 0
                     } else {
                       if (FALSE) {
                         if (Confidence < 2) {
-                          
-                          if (length(which(curdata$Adduct %in% 
-                            adduct_weights[which(adduct_weights[, 
-                              2] > 1), 1])) > 0) {
+                          print('check3')
+                          if (length(which(curdata$Adduct %in% adduct_weights[which(adduct_weights[,2] > 1), 1])) > 0) {
                             
                             if (curdata$score[1] > 10) {
                               # Confidence<-2
                               
-                              mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
-                                1] %in% curdata$Adduct), 
+                              mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 1] %in% curdata$Adduct), 
                                 2])))[1]
                               curdata <- curdata[which(curdata$Adduct %in% 
                                 adduct_weights[which(as.numeric(as.character(adduct_weights[, 
