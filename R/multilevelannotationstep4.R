@@ -146,7 +146,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   
                   Confidence <- 0
                   # print(final_res)
-                  if (final_res != "None") {
+                  if (final_res[1] != "None") {
                     if (is.na(final_res[1, 1]) == FALSE) {
                       
                       
