@@ -281,7 +281,7 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
     # print('OVER HERE') else
     {
         # change in 1.5.3
-        if (length(module_names) > 1 && curdata$score < 10) {
+        if (length(module_names) > 1 && curdata$score[1] < 10) {
             
             chemscoremat_conf_levels <- "None"
         } else {
@@ -302,7 +302,7 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
                   chemscoremat_conf_levels <- "Low"
                 } else {
                   # matches an M+H and score is greater than 10
-                  if (curdata$score > 10 && length(which(cur_adducts %in% 
+                  if (curdata$score[1] > 10 && length(which(cur_adducts %in% 
                     filter.by)) > 0) {
                     chemscoremat_conf_levels <- "Medium"
                     
