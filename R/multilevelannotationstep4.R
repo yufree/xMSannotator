@@ -137,7 +137,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                 }
                 
                 if (bool_check == 1) {
-                  
+                  print('before')
                   # print(cur_chemid) print(curdata)
                   final_res <- get_confidence_stage4(curdata, 
                     max_diff_rt, adduct_weights = adduct_weights, 
@@ -145,6 +145,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                     min_ions_perchem = min_ions_perchem)
                   
                   Confidence <- 0
+                  print('after')
                   # print(final_res)
                   if (final_res[1] != "None") {
                     if (is.na(final_res[1, 1]) == FALSE) {
