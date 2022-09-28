@@ -76,7 +76,7 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
         chemscoremat_conf_levels <- "None"
         # return(chemscoremat_conf_levels)
     }
-    if (length(unique(curdata$Adduct)) < 2 && curdata$score < 
+    if (length(unique(curdata$Adduct)) < 2 && curdata$score[1] < 
         10 && length(which(cur_adducts %in% filter.by)) < 
         1) {
         chemscoremat_conf_levels <- "None"
@@ -152,7 +152,7 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
         # print('here') print(curdata)
         if (length(which(adduct_weights[, 1] %in% cur_adducts)) > 
             0 && curdata$score[1] > 0.1) {
-            if (is.na(filter.by) == TRUE) {
+            if (is.na(filter.by)[1] == TRUE) {
                 good_mod <- curdata$Module_RTclust[which(curdata$Adduct %in% 
                   adduct_weights[, 1])]
                 curdata <- curdata[which(curdata$Module_RTclust %in% 
@@ -286,7 +286,7 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
             chemscoremat_conf_levels <- "None"
         } else {
             
-            if (length(module_names) > 1 && curdata$score > 
+            if (length(module_names) > 1 && curdata$score[1] > 
                 10 && length(which(cur_adducts %in% filter.by)) > 
                 0) {
                 
@@ -357,11 +357,11 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
                             
                             # print('abund ratio is') print(abund_ratio)
                             
-                            if (is.na(abund_ratio) == FALSE) {
-                              if (abund_ratio > 1) {
+                            if (is.na(abund_ratio)[1] == FALSE) {
+                              if (abund_ratio[1] > 1) {
                                 
                                 bad_ind_status[a1] <- 1
-                                if (chemscoremat_conf_levels == 
+                                if (chemscoremat_conf_levels[1] == 
                                   "High") {
                                   chemscoremat_conf_levels <- "Medium"
                                 } else {
@@ -599,7 +599,7 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
     curformula <- gsub(curformula, pattern = "Cr", replacement = "")
     
     numcarbons <- check_element(curformula, "C")
-    if (numcarbons < 1) {
+    if (numcarbons[1] < 1) {
         
         chemscoremat_conf_levels <- "None"
     }
@@ -619,21 +619,21 @@ get_confidence_stage4 <- function(curdata, max_diff_rt, adduct_weights = NA,
         }
     } else {
         
-        if (length(unique(curdata$Adduct)) < 2 && curdata$score < 
+        if (length(unique(curdata$Adduct)) < 2 && curdata$score[1] < 
             10 && length(which(cur_adducts %in% filter.by)) < 
             1) {
             chemscoremat_conf_levels <- "None"
             # return(chemscoremat_conf_levels)
         } else {
             
-            if (length(unique(curdata$Adduct)) < 2 && curdata$score > 
+            if (length(unique(curdata$Adduct)) < 2 && curdata$score[1] > 
                 10 && length(which(cur_adducts %in% filter.by)) > 
                 0) {
                 chemscoremat_conf_levels <- "Medium"
                 # return(chemscoremat_conf_levels)
             } else {
                 if (length(unique(curdata$Adduct)) < 2 && 
-                  curdata$score < 10 && length(which(cur_adducts %in% 
+                  curdata$score[1] < 10 && length(which(cur_adducts %in% 
                   filter.by)) > 0) {
                   chemscoremat_conf_levels <- "Low"
                   # return(chemscoremat_conf_levels)
