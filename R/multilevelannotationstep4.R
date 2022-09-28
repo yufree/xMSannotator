@@ -122,9 +122,9 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                 
                 curdata <- curdata[order(curdata$Adduct), 
                   ]
-                
-                if ((is.na(filter.by)[1] == FALSE) && (bool_check == 
-                  1)) {
+                tttt<-(is.na(filter.by) == FALSE) && (bool_check == 
+                  1)
+                if (tttt[1]) {
                   
                   check_adduct <- which(curdata$Adduct %in% 
                     filter.by)
