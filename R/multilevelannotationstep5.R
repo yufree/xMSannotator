@@ -6,7 +6,7 @@ multilevelannotationstep5 <- function(outloc, max.mz.diff = 5,
     setwd(outloc)
     max_diff_rt = max.rt.diff
     
-    if (is.na(chemscoremat) == TRUE) {
+    if (is.na(chemscoremat)[1] == TRUE) {
         curated_res <- read.csv("Stage4.csv")
     } else {
         
@@ -100,7 +100,7 @@ multilevelannotationstep5 <- function(outloc, max.mz.diff = 5,
             for (com_indval in 1:length(com_ind)) {
                 scoreval <- {
                 }
-                if (com_indval %in% good_ind == FALSE) {
+                if (com_indval[1] %in% good_ind == FALSE) {
                   # print(com_indval)
                   dmat_com <- curated_res[which(curated_res$chemical_ID %in% 
                     dmultsub$chemical_ID[com_indval]), ]
