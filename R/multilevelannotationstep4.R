@@ -196,17 +196,14 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   }
                   
                 }
-                print('check1')
-                
                 if (nrow(curdata) > 1) {
                   if (curdata$score[1] < 10) {
                     if (length(unique(curdata$Adduct)) < 2) {
-                        print('check2')
                       Confidence <- 0
                     } else {
                       if (FALSE) {
                         if (Confidence < 2) {
-                          print('check3')
+                          
                           if (length(which(curdata$Adduct %in% adduct_weights[which(adduct_weights[,2] > 1), 1])) > 0) {
                             
                             if (curdata$score[1] > 10) {
@@ -227,7 +224,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   }
                 }
                 
-                
+                print('check3')
                 curdata <- cbind(Confidence, curdata)
                 curdata <- as.data.frame(curdata)
                 
@@ -241,7 +238,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
             # chemids<-c('HMDB00277','HMDB00222','HMDB00043')
             
             # stopCluster(cl)
-            
+            print('check4')
             # save(list=c('chemscoremat_conf_levels1','chemids'),file='stage4conf_levels.Rda')
             
             chemscoremat_conf_levels <- as.data.frame(chemscoremat_conf_levels)
