@@ -1,10 +1,11 @@
 ## INSTALL
-install.packages(c('BiocManager','data.table','digest'))
+install.packages(c('BiocManager','data.table','digest','remotes'))
 remotes::install_github('omegahat/XMLSchema')
 remotes::install_github('cran/SSOAP')
 BiocManager::install(c("SSOAP","KEGGREST","pcaMethods","Rdisop","GO.db","matrixStats","WGCNA"))
-devtools::install_github("yufree/xMSannotator")
+remotes::install_github("yufree/xMSannotator")
 
 - source: https://sourceforge.net/projects/xmsannotator/
 - Formated by `formatR` package
 - Re-commented by `Rd2roxygen` package
+- fix `if` issue to make sure it can be used on R 4.x
