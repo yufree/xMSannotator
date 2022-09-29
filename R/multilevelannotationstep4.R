@@ -114,6 +114,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   ]
                 tttt<-(is.na(filter.by) == FALSE) && (bool_check == 
                   1)
+                print(tttt[1])
                 if (tttt[1]) {
                   
                   check_adduct <- which(curdata$Adduct %in% 
@@ -126,7 +127,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   
                 }
                 
-                if (bool_check != 1) {
+                if (bool_check == 1) {
                   # print(cur_chemid) print(curdata)
                   final_res <- get_confidence_stage4(curdata, 
                     max_diff_rt, adduct_weights = adduct_weights, 
