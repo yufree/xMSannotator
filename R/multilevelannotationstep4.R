@@ -99,111 +99,101 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
             # chemscoremat_conf_levels2<-sapply(1:length(chemids),function(c)
             
             # chemscoremat_conf_levels2<-parLapply(cl,1:length(chemids),function(c)
-            chemscoremat_conf_levels <- foreach(c = 1:length(chemids), 
-                .combine = rbind) %dopar% {
-                
-                cur_chemid <- chemids[c]
-                
-                curdata <- chemscoremat_highconf[which(chemscoremat_highconf$chemical_ID == 
-                  cur_chemid), ]
-                
-                bool_check = 1
-                
-                
-                curdata <- curdata[order(curdata$Adduct), 
-                  ]
-                tttt<-(is.na(filter.by) == FALSE) && (bool_check == 
-                  1)
-                print(tttt[1])
-                if (tttt[1]) {
-                  
-                  check_adduct <- which(curdata$Adduct %in% 
-                    filter.by)
-                  if (length(check_adduct) > 0) {
-                    bool_check = 1
-                  } else {
-                    bool_check = 0
-                  }
-                  
-                }
-                
-                if (bool_check == 1) {
-                  # print(cur_chemid) print(curdata)
-                  final_res <- get_confidence_stage4(curdata, 
-                    max_diff_rt, adduct_weights = adduct_weights, 
-                    filter.by = filter.by, max_isp = max_isp, 
-                    min_ions_perchem = min_ions_perchem)
-                  
-                  Confidence <- 0
-                  # print(final_res)
-                  if (final_res[1] != "None") {
-                    if (is.na(final_res[1, 1])[1] == FALSE) {
-                      
-                      
-                      Confidence <- as.numeric(as.character(final_res[, 
-                        1]))
-                      
-                      curdata <- final_res  #[,-c(1)]
-                      rm(final_res)
-                      if (Confidence[1] < 2) {
-                        
-                        if (length(which(curdata$Adduct %in% 
-                          adduct_weights[which(as.numeric(adduct_weights[, 
-                            2]) > 0), 1])) > 0) {
-                          
-                          if (curdata$score[1] > 10) {
-                            
-                            mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
-                              1] %in% curdata$Adduct), 2])))[1]
-                            curdata <- curdata[which(curdata$Adduct %in% 
-                              adduct_weights[which(as.numeric(as.character(adduct_weights[, 
-                                2])) >= mnum), 1]), ]
-                            Confidence <- 2
-                          }
-                        }
-                      }
-                      
-                    }
-                  }
-                } else {
-                  Confidence <- 0
-                  if (length(which(curdata$Adduct %in% adduct_weights[, 
-                    1])) > 0) {
-                    
-                    if (curdata$score[1] >= 10) {
-                      
-                      # curdata<-curdata[which(curdata$Adduct%in%adduct_weights[,1]),]
-                      mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
-                        1] %in% curdata$Adduct), 2])))[1]
-                      # curdata<-curdata[which(curdata$Adduct%in%adduct_weights[which(as.numeric(as.character(adduct_weights[,2]))>=mnum),1]),]
-                      if (length(which(curdata$Adduct %in% 
-                        filter.by)) > 0) {
-                        curdata <- curdata[which(curdata$Adduct %in% 
-                          filter.by), ]
-                        Confidence <- 2
-                      }
-                      
-                    }
-                  }
-                  
-                }
-                if (nrow(curdata) > 1) {
-                  if (curdata$score[1] < 10) {
-                    if (length(unique(curdata$Adduct)) < 2) {
-                      Confidence <- 0
-                    } 
-                  }
-                }
-                curdata <- cbind(Confidence, curdata)
-                curdata <- as.data.frame(curdata)
-                
-                curdata <- curdata[, c("Confidence", "chemical_ID")]
-                curdata <- unique(curdata)
-                # curdata<-as.matrix(curdata) print(mem_used())
-                # rm(curdata)
-                return(curdata)
-                # return(Confidence)
-            }  #)
+            cur_chemid <- chemids
+curdata <- chemscoremat_highconf[which(chemscoremat_highconf$chemical_ID == 
+                                         cur_chemid), ]
+
+bool_check = 1
+
+
+curdata <- curdata[order(curdata$Adduct), 
+]
+tttt<-(is.na(filter.by) == FALSE) && (bool_check == 
+                                        1)
+if (tttt[1]) {
+  
+  check_adduct <- which(curdata$Adduct %in% 
+                          filter.by)
+  if (length(check_adduct) > 0) {
+    bool_check = 1
+  } else {
+    bool_check = 0
+  }
+  
+}
+
+if (bool_check == 1) {
+  # print(cur_chemid) print(curdata)
+  final_res <- get_confidence_stage4(curdata, 
+                                     max_diff_rt, adduct_weights = adduct_weights, 
+                                     filter.by = filter.by, max_isp = max_isp, 
+                                     min_ions_perchem = min_ions_perchem)
+  
+  Confidence <- 0
+  # print(final_res)
+  if (final_res[1] != "None") {
+    if (is.na(final_res[1, 1])[1] == FALSE) {
+      
+      
+      Confidence <- as.numeric(as.character(final_res[, 
+                                                      1]))
+      
+      curdata <- final_res  #[,-c(1)]
+      rm(final_res)
+      if (Confidence[1] < 2) {
+        
+        if (length(which(curdata$Adduct %in% 
+                         adduct_weights[which(as.numeric(adduct_weights[, 
+                                                                        2]) > 0), 1])) > 0) {
+          
+          if (curdata$score[1] > 10) {
+            
+            mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
+                                                                                    1] %in% curdata$Adduct), 2])))[1]
+            curdata <- curdata[which(curdata$Adduct %in% 
+                                       adduct_weights[which(as.numeric(as.character(adduct_weights[, 
+                                                                                                   2])) >= mnum), 1]), ]
+            Confidence <- 2
+          }
+        }
+      }
+      
+    }
+  }
+} else {
+  Confidence <- 0
+  if (length(which(curdata$Adduct %in% adduct_weights[, 
+                                                      1])) > 0) {
+    
+    if (curdata$score[1] >= 10) {
+      
+      # curdata<-curdata[which(curdata$Adduct%in%adduct_weights[,1]),]
+      mnum <- max(as.numeric(as.character(adduct_weights[which(adduct_weights[, 
+                                                                              1] %in% curdata$Adduct), 2])))[1]
+      # curdata<-curdata[which(curdata$Adduct%in%adduct_weights[which(as.numeric(as.character(adduct_weights[,2]))>=mnum),1]),]
+      if (length(which(curdata$Adduct %in% 
+                       filter.by)) > 0) {
+        curdata <- curdata[which(curdata$Adduct %in% 
+                                   filter.by), ]
+        Confidence <- 2
+      }
+      
+    }
+  }
+  
+}
+if (nrow(curdata) > 1) {
+  if (curdata$score[1] < 10) {
+    if (length(unique(curdata$Adduct)) < 2) {
+      Confidence <- 0
+    } 
+  }
+}
+curdata <- cbind(Confidence, curdata)
+curdata <- as.data.frame(curdata)
+
+curdata <- curdata[, c("Confidence", "chemical_ID")]
+chemscoremat_conf_levels <- unique(curdata)
             # chemids<-c('HMDB00277','HMDB00222','HMDB00043')
             
             # stopCluster(cl)
