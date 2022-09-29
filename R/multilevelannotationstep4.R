@@ -100,7 +100,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
             
             # chemscoremat_conf_levels2<-parLapply(cl,1:length(chemids),function(c)
             chemscoremat_conf_levels <- foreach(c = 1:length(chemids), 
-                .combine = rbind) %do% {
+                .combine = rbind) %dopar% {
                 
                 cur_chemid <- chemids[c]
                 
@@ -126,7 +126,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                   
                 }
                 
-                if (bool_check == 1) {
+                if (bool_check != 1) {
                   # print(cur_chemid) print(curdata)
                   final_res <- get_confidence_stage4(curdata, 
                     max_diff_rt, adduct_weights = adduct_weights, 
