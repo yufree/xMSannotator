@@ -100,7 +100,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
             
             # chemscoremat_conf_levels2<-parLapply(cl,1:length(chemids),function(c)
             chemscoremat_conf_levels <- foreach(c = 1:length(chemids), 
-                .combine = rbind) %dopar% {
+                .combine = rbind) %do% {
                 
                 cur_chemid <- chemids[c]
                 
@@ -326,24 +326,7 @@ multilevelannotationstep4 <- function(outloc, max.mz.diff = 5,
                 parent_bad_ind <- {
                 }
                 
-                if (FALSE) {
-                  g2 <- {
-                  }
-                  
-                  for (i1 in ind_names) {
-                    
-                    temp1 <- g1[which(g1$index.B == i1), 
-                      ]
-                    bad_ind <- which(temp1$time.difference > 
-                      min(temp1$time.difference)[1])  #which(g1$time.difference[temp1]>min(g1$time.difference[temp1])[1])
-                    if (length(bad_ind) > 0) {
-                      g2 <- rbind(g2, temp1[-bad_ind, ])
-                    } else {
-                      g2 <- rbind(g2, temp1)
-                    }
-                    # parent_bad_ind<-c(parent_bad_ind,bad_ind)
-                  }
-                }
+               
                 
                 # dup_index_g1<-parent_bad_ind
                 # #which(duplicated(g1$index.B)==TRUE)
