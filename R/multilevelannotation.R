@@ -1851,60 +1851,9 @@ multilevelannotation <- function(dataA,
         if (allsteps == TRUE) {
             print("Status 3: Calculating scores for individual chemicals/metabolites")
 
-            if (num_sets > num_nodes) {
-                cl <- makeSOCKcluster(num_nodes)
-
-                clusterEvalQ(cl, "multilevelannotationstep2")
-
-                clusterExport(cl, "multilevelannotationstep2")
-
-                clusterEvalQ(cl, "library(Rdisop)")
-                clusterEvalQ(cl, "library(plyr)")
-                # clusterEvalQ(cl, 'library(pryr)') clusterEvalQ(cl,
-                # 'library(profmem)') clusterEvalQ(cl, 'library(gdata)')
-                clusterExport(cl, "get_chemscorev1.6.71")
-                clusterExport(cl, "getMolecule")
-                clusterExport(cl, "ldply")
-                # clusterExport(cl, 'mem_used')
-                clusterExport(cl, "get_confidence_stage2")
-
-                # clusterExport(cl, 'll')
-                clusterExport(cl, "check_element")
-                clusterExport(cl, "group_by_rt_histv2")
-                clusterExport(cl, "adduct_table")
-                clusterExport(cl, "adduct_weights")
-                outloc1 <- getwd()
-                parLapply(cl, 1:num_sets, function(arg1, outloc1) {
-                    cur_fname <-
-                        paste(outloc1,
-                              "/stage2/chem_score",
-                              arg1,
-                              ".Rda",
-                              sep = "")
-                    check_if_exists <-
-                        suppressWarnings(try(load(cur_fname))
-                        )
-
-                    if (is(check_if_exists, "try-error"))
-                    {
-                        # suppressWarnings(multilevelannotationstep2(outloc1=outloc,list_number=arg1))
-                        multilevelannotationstep2(outloc1 = outloc1,
-                                                  list_number = arg1)
-                    } else {
-                        print(paste("List ", arg1, " already exists.",
-                                    sep = ""))
-                    }
-
-                }, outloc1)
-
-                # max.time.diff=max.rt.diff,filter.by=filter.by,max_isp=max_isp,numnodes=1,MplusH.abundance.ratio.check=MplusH.abundance.ratio.check,mass_defect_window=mass_defect_window,mass_defect_mode=mass_defect_mode
-
-                stopCluster(cl)
-            } else {
                 for (arg1 in 1:num_sets) {
                     multilevelannotationstep2(outloc1 = outloc,
                                               list_number = arg1)
-                }
 
             }
 
