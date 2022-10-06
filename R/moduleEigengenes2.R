@@ -14,11 +14,12 @@ moduleEigengenes2 <- function(expr, colors, impute = TRUE,
     if (is.null(colors)) {
         stop("moduleEigengenes: Error: colors is NULL. ")
     }
-    if (is.null(dim(expr)) || length(dim(expr)) != 2) 
+    xxx<-is.null(dim(expr)) || length(dim(expr)) != 2
+    if (xxx[1]) 
         stop("moduleEigengenes: Error: expr must be two-dimensional.")
     if (dim(expr)[2] != length(colors)) 
         stop("moduleEigengenes: Error: ncol(expr) and length(colors) must be equal (one color per gene).")
-    if (is.factor(colors)) {
+    if (is.factor(colors[1])) {
         nl = nlevels(colors)
         nlDrop = nlevels(colors[, drop = TRUE])
         if (nl > nlDrop) 

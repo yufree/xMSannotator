@@ -192,7 +192,7 @@ ChemSpider.annotation <- function(dataA, max.mz.diff = 10,
                     max.mz.diff = max.mz.diff, adductname = adductname, 
                     datasources, tokenstr, maxhits, syssleep, 
                     adduct_table = adduct_table)
-                  if (is(cur.annot.res, "try-error")) {
+                  if (is(cur.annot.res[1], "try-error")) {
                     Sys.sleep(10)
                     cur.annot.res <- parLapply(cl, s1, chspider.batch.annotation.child, 
                       max.mz.diff = max.mz.diff, adductname = adductname, 

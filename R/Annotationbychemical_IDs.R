@@ -85,7 +85,7 @@ Annotationbychemical_IDs <- function(dataA, queryadductlist = c("M+H"),
     mz.annot.res <- parLapply(cl, s1, Annotationbychemical_IDschild, 
         dataA, queryadductlist, adduct_type, adduct_table, 
         max.mz.diff, outloc, otherdbs, otherinfo, keggCompMZ)
-    if (is(mz.annot.res, "try-error")) {
+    if (is(mz.annot.res[1], "try-error")) {
         Sys.sleep(10)
         mz.annot.res <- parLapply(cl, s1, Annotationbychemical_IDschild, 
             dataA, queryadductlist, adduct_type, adduct_table, 
