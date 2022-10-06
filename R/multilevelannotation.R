@@ -1852,7 +1852,7 @@ multilevelannotation <- function(dataA,
             print("Status 3: Calculating scores for individual chemicals/metabolites")
 
                 for (arg1 in 1:num_sets) {
-                    multilevelannotationstep2(outloc1 = outloc,
+                    multilevelannotationstep2(outloc1 = outloc1,
                                               list_number = arg1)
 
             }
