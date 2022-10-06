@@ -1850,6 +1850,7 @@ multilevelannotation <- function(dataA,
 
         if (allsteps == TRUE) {
             print("Status 3: Calculating scores for individual chemicals/metabolites")
+            outloc1 <- getwd()
 
                 for (arg1 in 1:num_sets) {
                     multilevelannotationstep2(outloc1 = outloc1,
