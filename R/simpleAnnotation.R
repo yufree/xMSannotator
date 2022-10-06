@@ -67,7 +67,7 @@ simpleAnnotation <- function(dataA, max.mz.diff = 10, num_nodes = 2,
     
     suppressWarnings(dir.create(outloc))
     
-    suppressWarnings(if (queryadductlist == "all" & mode == 
+    suppressWarnings(if (queryadductlist[1] == "all" & mode == 
         "pos") {
         
         adduct_names <- adduct_table$Adduct[(adduct_table$Type == 
@@ -78,7 +78,7 @@ simpleAnnotation <- function(dataA, max.mz.diff = 10, num_nodes = 2,
             adduct_names), ]
         
     } else {
-        if (queryadductlist == "all" & mode == "neg") {
+        if (queryadductlist[1] == "all" & mode == "neg") {
             
             adduct_names <- adduct_table$Adduct[(adduct_table$Type == 
                 "S" & adduct_table$Mode == "negative") | 
