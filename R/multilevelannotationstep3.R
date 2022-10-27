@@ -341,7 +341,7 @@ multilevelannotationstep3 <- function(outloc1, adduct_weights = NA,
                             
                           } else {
                             
-                            if (num_chems < 3) {
+                            if (num_chems[1] < 3) {
                               
                               num_chems <- 0
                             } else {
@@ -637,7 +637,7 @@ multilevelannotationstep3 <- function(outloc1, adduct_weights = NA,
                               
                             } else {
                               
-                              if (num_chems < 3) {
+                              if (num_chems[1] < 3) {
                                 
                                 num_chems <- 0
                               } else {

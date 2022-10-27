@@ -1844,10 +1844,6 @@ multilevelannotation <- function(dataA,
             allsteps <- allsteps_temp
         }
 
-
-
-
-
         if (allsteps == TRUE) {
             print("Status 3: Calculating scores for individual chemicals/metabolites")
 
@@ -1885,7 +1881,7 @@ multilevelannotation <- function(dataA,
                          suppressWarnings(try(load(cur_fname))
                          )
 
-                     if (is(check_if_exists[1], "try-error"))
+                     if (is(check_if_exists, "try-error"))
                      {
                          # suppressWarnings(multilevelannotationstep2(outloc1=outloc,list_number=arg1))
                          multilevelannotationstep2(outloc1 = outloc1,
