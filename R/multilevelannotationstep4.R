@@ -89,7 +89,7 @@ multilevelannotationstep4 <- function(outloc,
       
       Confidence <- 0
       # print(final_res)
-      if (final_res[1] != "None") {
+      if ((final_res[1] != "None")[1]) {
         if (is.na(final_res[1, 1])[1] == FALSE) {
           Confidence <- as.numeric(as.character(final_res[,
                                                           1]))
